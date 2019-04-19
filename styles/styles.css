@@ -1,0 +1,21 @@
+body {
+  background: rgba(34, 34, 34, 0.7)
+}
+.square {
+  background: grey;
+  border: 1px solid royalblue;
+  height: 100%;
+  width: 10%;
+}
+
+.board {
+  width: 60vh;
+  height: 60vh;
+  border: 1px solid royalblue;
+  box-shadow: 0 0 25px rgba(34, 34, 34, 0.7);
+}
+
+.row {
+  display: flex;
+  height: 10%
+}

@@ -10,12 +10,13 @@
 </head>
 
 <body>
-  <div style="height: 100vh; display: flex; justify-content: center; align-items: center">
-    <h2>Player 1</h2>
-    <div id="board">
-
+  <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <h2 id="currentPlayer">player1</h2>
+    <div id="board" class="board">
     </div>
+    <button id="actionButton" style="height: 1.5rem; padding: 4px 10px; margin-top: 4rem;"> Toggle </button>
   </div>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>
