@@ -4,6 +4,9 @@ body {
   color: white;
 }
 .square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: grey;
   border: 1px solid royalblue;
   height: 100%;
@@ -29,6 +32,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.ship {
+  background-color: blue;
 }
 
 /* .button {
