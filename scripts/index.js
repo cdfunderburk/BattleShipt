@@ -32,6 +32,7 @@ const shipState = () => (
   }
 )
 
+const playerList = ['player1','player2']
 const size = 10
 const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const cols = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
@@ -44,10 +45,10 @@ const updateState = (slice, data) => {
   state = { ...state, [slice]: data }
 }
 
-let button = document.getElementById('actionButton')
-button.addEventListener('click', () => {
-  changePlayer()
-})
+// let button = document.getElementById('actionButton')
+// button.addEventListener('click', () => {
+//   changePlayer()
+// })
 
 const changePlayer = () => {
   ships = { ...ships, activeCoord: 0, activeShip: 0 }
@@ -69,8 +70,8 @@ const placeShip = (player, ship, coord, guess) => {
 }
 
 const isNotTaken = (player, grid) => {
-  ships_array = ships[player].map((ship) => (ship.position)).flat()
-  return !ships_array.includes(grid)
+  shipsArray = ships[player].map((ship) => (ship.position)).flat()
+  return !shipsArray.includes(grid)
 }
 
 const shipPlaced = (player, ship) => {
@@ -81,68 +82,109 @@ const shipPlaced = (player, ship) => {
 }
 
 const allPlayerShipsPlaced = (player) => {
-  placed_array = ships[player].map((ship) => (ship.placed))
-  return placed_array.every(val => val == true)
+  placedArray = ships[player].map((ship) => (ship.placed))
+  return placedArray.every(val => val == true)
 }
 
 const allShipsPlaced = () => {
-  placed_array = ships[player].map((ship) => (ship.placed))
-  return placed_array.every(val => val == true)
+  boardReady = []
+  for (let player of playerList) {
+    placedArray = ships[player].map((ship) => (ship.placed))
+    eval = placedArray.every(val => val == true)
+    boardReady.push(eval)
+  }
+  finalEval =  boardReady.every(val => val == true)
+  return finalEval
 }
 
-const checkGame = (selectedGrid) => {
+const checkGame = (selectedGrid, row, column) => {
+  console.log(selectedGrid);
   let { activeShip, activeCoord } = ships
   let { currentPlayer: player } = state
   if (!state.shipsPlaced) {
+    // check if grid is taken
     if (isNotTaken(player, selectedGrid)) {
-      // console.log("ActiveShip:",activeShip,"ActiveCoord:", activeCoord);
+      // if grid is not taken place a marker on the board
       placeShip(player, activeShip, activeCoord, selectedGrid)
+      // Check all ship grid positions to see if the ship is placed 
       shipPlaced(player, activeShip)
-      allPlayerShipsPlaced(player) ? changePlayer(): null
+      //Check if all ships have been placed for player
+      if (allPlayerShipsPlaced(player)){
+        changePlayer()
+        replaceBoard(player)
+      }
+      //Check if all ships have been placed for both users
       allShipsPlaced() ? updateState('shipsPlaced',true): null
     } else {
+      // If grid is taken display error message
       console.log('That space is already taken choose another')
     }
-    //player places a ship by clicking a square
-    //Validations:
-    // check if grid is taken
-    // if grid is taken display error message
-    // if grid is not taken place a marker on the board
-    // do this for all ship grid positions for the first play
-    //check if all ships have been placed for player
-    //check if all ships have been placed for both users
   } else {
     console.log("The Game Begins")
     //player makes a move
+    makeMove(player,row,column)
     //check if move hits a ship
+    checkHit()
     //check if move sinks a ship
+    checkSink()
     //check if all ships are sunk
+    checkDefeat()
     //switches player
+
   }
 }
 
-const createSquare = (elem, col, row) => {
+const makeMove = (player,row,col) => {
+  console.log(player,row,col);
+  console.log("Move");
+
+}
+
+const checkHit = () => {
+  console.log("Hit");
+}
+
+const checkSink = () => {
+  console.log("Sink");
+}
+
+const checkDefeat = () => {
+  console.log("Defeat");
+}
+
+const replaceBoard = (player) => {
+  let board = document.getElementById(player)
+  while (board.firstChild) {
+      board.removeChild(board.firstChild);
+  }
+  rows.map((row) => createRow(board, row, player))
+}
+
+const createSquare = (elem, col, row, player) => {
   let newSquare = document.createElement('div')
   newSquare.classList.add('square')
-  newSquare.setAttribute('id', `${col}${row}`)
-  newSquare.addEventListener('click', (e) => (checkGame(e.target.id)))
+  newSquare.setAttribute('id', `${player}-${col}${row}`)
+  newSquare.addEventListener('click', (e) => (checkGame(e.target.id, row, col)))
   elem.appendChild(newSquare)
 }
 
-const createRow = (elem, rowId) => {
+const createRow = (elem, rowId, player) => {
   let newRow = document.createElement('div')
   newRow.classList.add('row')
-  cols.map(col => createSquare(newRow, col, rowId))
+  cols.map(col => createSquare(newRow, col, rowId, player))
   elem.appendChild(newRow)
 }
 
 const createBoard = () => {
   let wC = document.getElementById('wc')
   wC.parentNode.removeChild(wC)
-  const board = document.getElementById('board')
-  // Create Heading Row
-  rows.map((row) => createRow(board, row))
+  for (let player of playerList) {
+    console.log(player);
+    const board = document.getElementById(player)
+    rows.map((row) => createRow(board, row, player))
+  }
 }
+
 
 const pickGameModeButton = (obj, text, mode) => {
   let button = document.createElement('button')
@@ -165,7 +207,7 @@ const gameMessage = (message) => {
 }
 
 const welcomeScreen = () => {
-  const board = document.getElementById('board')
+  const board = document.getElementById('player1')
   let welcomeContainer = document.createElement('div')
   welcomeContainer.classList.add('welcome-container')
   welcomeContainer.setAttribute('id', 'wc')
