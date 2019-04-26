@@ -88,7 +88,7 @@ const replaceBoard = (player) => {
 }
 
 const createSquare = (elem, col, row, player) => {
-  let newSquare = createDomElem('div', '', 'square', `${player}-${col}${row}` )
+  let newSquare = createDomElem('div', '', 'square', `${player}-${col}${row}`)
   newSquare.addEventListener('click', (e) => (checkGame(e.target.id, row, col, player)))
   elem.appendChild(newSquare)
 }
@@ -109,7 +109,7 @@ const createBoard = () => {
 }
 
 const pickGameModeButton = (obj, text, mode) => {
-  let button = createDomElem('button', text, 'button', mode )
+  let button = createDomElem('button', text, 'button', mode)
   button.addEventListener('click', () => {
     updateState('gameMode', button.id)
     createBoard()
@@ -121,16 +121,20 @@ const pickGameModeButton = (obj, text, mode) => {
 const gameMessage = (message) => {
   let display = document.getElementById('headerStatus')
   display.innerText = message
-  setTimeout(()=>{
-    display.innerText = 'Click square to make your move'
-  },2000)
+  setTimeout(() => {
+    if (state.shipsPlaced == true) {
+      display.innerText = 'Click square to make your move'
+    } else {
+      display.innerText = 'Click square to place ship'
+    }
+  }, 2000)
 }
 
 const welcomeScreen = () => {
   const board = document.getElementById('player1')
   welcomeContainer = createDomElem('div', '', 'welcome-container', 'wc')
-  welcomeStatement = createDomElem('h1','Welcome to BattleShipt')
-  subStatement = createDomElem('p','Before we start the game...blah,blah')
+  welcomeStatement = createDomElem('h1', 'Welcome to BattleShipt')
+  subStatement = createDomElem('p', 'Before we start the game...blah,blah')
   welcomeContainer.appendChild(welcomeStatement)
   welcomeContainer.appendChild(subStatement)
   pickGameModeButton(welcomeContainer, '2 Players', '2P')
@@ -138,7 +142,7 @@ const welcomeScreen = () => {
   board.appendChild(welcomeContainer)
 }
 
-const createDomElem = (type, text, className=null, id=null ) => {
+const createDomElem = (type, text, className = null, id = null) => {
   let elem = document.createElement(type)
   let elemTxt = document.createTextNode(text)
   elem.appendChild(elemTxt)
@@ -153,10 +157,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 // Ship Management
-const placeShip = (player, ship, coord, guess) => {
+const linearShip = (player, row, col) => {
+  console.log('row =>', row, 'col =>', col);
+  colArray = []
+  rowArray = []
+  colIndex = cols.findIndex(item => item == col)
+  console.log(colIndex);
+  range = [-1, 0, 1]
+  for (let i of range) {
+    colArray.push(`${player}-${col}${row + i}`)
+    rowArray.push(`${player}-${cols[colIndex + i]}${row}`)
+  }
+  return [...colArray, ...rowArray]
+}
+
+const placeShip = (player, ship, coord, grid, row = null, col = null) => {
   ship_length = ships[player][ship].position.length - 1
-  ships[player][ship].position[coord] = guess
-  ships = coord == ship_length ? { ...ships, activeCoord: 0, activeShip: ship + 1 } : { ...ships, activeCoord: coord + 1 }
+  if (coord == 0) {
+    available = linearShip(player, row, col);
+    console.log('aval =>', available)
+  }
+  if (available.includes(grid)) {
+    ships[player][ship].position[coord] = grid
+    ships = coord == ship_length ? { ...ships, activeCoord: 0, activeShip: ship + 1 } : { ...ships, activeCoord: coord + 1 }
+    updateUI(grid, 'ship')
+  } else {
+    gameMessage("Ship pieces must be placed in a line and together")
+
+  }
 }
 
 const isNotTaken = (player, grid) => {
@@ -219,8 +247,7 @@ const checkGame = (selectedGrid, row, column, boardPlayer) => {
       gameMessage("You can't place a ship on your opponent's board")
     } else if (isNotTaken(player, selectedGrid)) {
       // if grid is not taken place a marker on the board
-      placeShip(player, activeShip, activeCoord, selectedGrid)
-      updateUI(selectedGrid, 'ship')
+      placeShip(player, activeShip, activeCoord, selectedGrid, row, column)
       // Check all ship grid positions to see if the ship is placed 
       shipPlaced(player, activeShip)
       //Check if all ships have been placed for player
@@ -228,7 +255,8 @@ const checkGame = (selectedGrid, row, column, boardPlayer) => {
         changePlayer()
         setTimeout(() => (replaceBoard(player)), 500)
         if (state.gameMode == 'C') {
-          computerShips(activeShip, activeCoord)
+          computerShips()
+          replaceBoard('player2')
           changePlayer()
         }
       }
@@ -258,7 +286,6 @@ const checkGame = (selectedGrid, row, column, boardPlayer) => {
       //check if all ships are sunk
       if (checkDefeat(player)) {
         gameMessage("Game Over")
-        console.log("Game Over");
       }
       //switches player
       if (state.gameMode == 'C') {
@@ -276,7 +303,6 @@ const checkGame = (selectedGrid, row, column, boardPlayer) => {
           //check if all ships are sunk
           if (checkDefeat(player)) {
             gameMessage("Game Over")
-            console.log("Game Over");
           }
           console.log('---------------------------------');
         }, 500)
@@ -305,28 +331,23 @@ const randomNumber = (min, max) => {
 }
 
 const computerShips = () => {
-  let horizontal = Math.random() >= 0.5;
-  shipsArray = ships.player2.map((shipObject) => (shipObject.position))
-  shipcount = shipsArray.flat().length
-  let rowIndex = null
-  let columnIndex = null
+  shipcount = ships.player2.map((shipObject) => (shipObject.position)).flat().length
   for (i = 0; i < shipcount; i++) {
     let { activeShip: ship, activeCoord: coord } = ships
     if (coord != 0) {
-      let add = Math.random() >= 0.5;
-      if (horizontal) {
-        columnIndex = add ? columnIndex + 1 : columnIndex - 1
-      } else {
-        rowIndex = add ? rowIndex + 1 : rowIndex - 1
-      }
+      let removeGridOriginal = (array) => array.filter((v) => v !== positionName)
+      available = removeGridOriginal(available)
+      index = randomNumber(0, 3)
+      positionName = available[index]
+      row = null
+      columnValue = null
     } else {
-      rowIndex = randomNumber(1, 9)
-      columnIndex = randomNumber(1, 9)
+      row = randomNumber(2, 8)
+      column = randomNumber(2, 8)
+      columnValue = cols[column]
+      positionName = `player2-${columnValue}${row}`
     }
-    let rowValue = rows[rowIndex]
-    let columnValue = cols[columnIndex]
-    positionName = `player2-${columnValue}${rowValue}`
-    placeShip('player2', ship, coord, positionName)
+    placeShip('player2', ship, coord, positionName, row, columnValue)
     shipPlaced('player2', ship)
   }
 }
