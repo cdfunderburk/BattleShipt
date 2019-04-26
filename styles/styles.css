@@ -7,8 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: grey;
-  border: 1px solid royalblue;
+  border: 1px solid rgba(34, 34, 34, 0.7);
   height: 100%;
   width: 10%;
 }
@@ -40,7 +39,7 @@ body {
 
 .legend-vert {
   height: 10%;
-  width: 50px;
+  width: 30px;
   border: 1px solid white;
   display: flex;
   flex-direction: column;
@@ -55,6 +54,34 @@ body {
   border: 5px solid transparent;
 }
 
+.header-legend {
+  width: 50vh;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  border: 5px solid transparent;
+  /* align-items: flex-end */
+}
+
+.legend-hor {
+  width: 50px;
+  height: 30px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center
+
+}
+
+.miss {
+  background-image: url(../styles/whiteX.png);
+  background-size: cover;
+}
+
+.hit {
+  background-image: url(../styles/redX.png);
+  background-size: cover;
+}
 /* .button {
   border: 1px solid white;
   color: rgba(0, 0, 0, 0.7)

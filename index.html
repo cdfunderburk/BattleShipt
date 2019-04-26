@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
+  <title>BattleShipt</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./styles/styles.css">
@@ -13,75 +13,151 @@
   <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
     <h2 id="headerStatus"></h2>
     <div style="display: flex; justify-content: center; align-items: center;">
-      <div style="height: 50vh; display: flex;">
-        <div class="legend">
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">1</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">2</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">3</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">4</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">5</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">6</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">7</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">8</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">9</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">10</h3>
+      <div style="display: flex; flex-direction: column; justify-content: center;">
+        <div style="width: 100%; display: flex; justify-content: flex-end; align-items: center;">
+          <div class="header-legend">
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">A</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">B</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">C</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">D</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">E</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">F</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">G</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">H</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">I</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">J</h3>
+            </div>
           </div>
         </div>
-        <div id="player1" class="board" style="margin-right: 20px"></div>
+        <div style="height: 50vh; display: flex;">
+          <div class="legend">
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">1</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">2</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">3</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">4</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">5</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">6</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">7</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">8</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">9</h3>
+            </div>
+            <div class="legend-vert">
+              <h3 style="margin: 0px;">10</h3>
+            </div>
+          </div>
+          <div id="player1" class="board" style="margin-right: 20px"></div>
+        </div>
+        <h3>Player 1</h3>
       </div>
-      <div style="height: 50vh; display: flex;">
-        <div id="player2" class="board"></div>
-        <div class="legend">
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">1</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">2</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">3</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">4</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">5</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">6</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">7</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">8</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">9</h3>
-          </div>
-          <div class="legend-vert">
-            <h3 style="margin: 0px;">10</h3>
+      <div style="display: flex; flex-direction: column; justify-content: center; padding-top: 10px;">
+        <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center;">
+          <div class="header-legend">
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">A</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">B</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">C</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">D</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">E</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">F</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">G</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">H</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">I</h3>
+            </div>
+            <div class="legend-hor">
+              <h3 style="margin: 0px;">J</h3>
+            </div>
           </div>
         </div>
+        <div style="display: flex">
+          <div id="player2" class="board"></div>
+          <div style="height: 50vh; display: flex;">
+            <div class="legend">
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">1</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">2</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">3</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">4</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">5</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">6</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">7</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">8</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">9</h3>
+              </div>
+              <div class="legend-vert">
+                <h3 style="margin: 0px;">10</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Player 2</h3>
       </div>
 
     </div>
