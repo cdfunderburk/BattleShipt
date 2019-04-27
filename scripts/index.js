@@ -134,7 +134,7 @@ const welcomeScreen = () => {
   const board = document.getElementById('player1')
   welcomeContainer = createDomElem('div', '', 'welcome-container', 'wc')
   welcomeStatement = createDomElem('h1', 'Welcome to BattleShipt')
-  subStatement = createDomElem('p', 'Before we start the game...blah,blah')
+  subStatement = createDomElem('p', 'Please select a play mode')
   welcomeContainer.appendChild(welcomeStatement)
   welcomeContainer.appendChild(subStatement)
   pickGameModeButton(welcomeContainer, '2 Players', '2P')
@@ -218,20 +218,26 @@ const checkHit = (grid, player) => {
   shipsArray = ships[player].map((ship) => (ship.position.findIndex((coord) => (coord == grid)))).flat()
   hitShipIndex = shipsArray.findIndex(ind => (ind == 0 || ind == 1))
   hitShipCoord = shipsArray[hitShipIndex]
+  recieverLabel = player == 'player1' ? "Player 1" : "Player 2"
+  playerLabel = state.gameMode == 'C' ? player == 'player1' ? "Computer" : "You" : "You"
   if (hitShipIndex != -1) {
     ships[player][hitShipIndex].position[hitShipCoord] = "HIT"
     updateUI(grid, 'hit')
     console.log("Hit");
+    gameMessage(`${playerLabel} hit ${recieverLabel}'s ship!`)
   } else {
     updateUI(grid, 'miss')
     console.log("Miss");
+    gameMessage(`${playerLabel} missed ${recieverLabel}'s ship!`)
   }
 }
 
 const checkSink = (player) => {
+  recieverLabel = player == 'player1' ? "Player 1" : "Player 2"
   shipsArray = ships[player].map((ship) => {
-    if (ship.position.every(val => val == "HIT")) {
+    if (ship.position.every(val => val == "HIT") && ship.destroyed == false) {
       ship.destroyed = true
+      gameMessage(`${recieverLabel}'s ship was destroyed!`)
     }
   })
 }
@@ -287,7 +293,6 @@ const checkGame = (selectedGrid, row, column, boardPlayer) => {
       if (checkDefeat(player)) {
         gameMessage("Game Over")
       }
-      //switches player
       if (state.gameMode == 'C') {
         setTimeout(() => {
           player = inversePlayer(player)
