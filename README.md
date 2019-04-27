@@ -16,18 +16,18 @@ This game was built without dependencies.
 ## Game Play
 Each player has a grid like the one below:
 
-![ Game Board](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.00+PM.png)
+![Game Board](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.00+PM.png)
 
 
 ####Game Setup
 Each player has 4 ships ( each ship has two grid positions).  The ship's grid positions must be placed next to each other and either vertical or horizontal as shown below:
 
-![ Game Setup](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.52+PM.png)
+![Game Setup](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.52+PM.png)
 
 ####Hit
  When the space that was chosen has a ship placed on it, the space will display a red X:
 
-![ Hit](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.35+PM.png)
+![Hit](https://s3.us-east-2.amazonaws.com/battleshipt/Screen+Shot+2019-04-26+at+6.54.35+PM.png)
 
 
 ####Miss 
