@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(34, 34, 34, 0.7);
+  border: 1px solid rgba(199, 199, 199, 0.377);
   height: 100%;
   width: 10%;
 }
